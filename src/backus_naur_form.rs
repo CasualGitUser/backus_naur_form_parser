@@ -298,11 +298,16 @@ macro_rules! backus_naur_form {
     ($(priority $priority:expr => $rule:expr $(=> $function_body:expr)?)+) => {{
         let mut bnf = $crate::backus_naur_form::BackusNaurForm::default();
         $(
-            let _non_terminal_name = $crate::backus_naur_form::rule::get_name_from_rule($rule);
+            if let Some((name, _)) = $rule.split_once("::=") {
+                let _non_terminal_name = &name.trim()[1..name.len() - 2];
+                $(
+                    bnf.add_compile_function(_non_terminal_name, &$function_body);
+                )?
+            } else {
+                panic!("the replacement operator (::=) is missing or invalid in the rule {}", $rule);
+            }
 
-            $(
-                bnf.add_compile_function(_non_terminal_name, &$function_body);
-            )?
+
 
             bnf.add_non_terminal_symbol_from_rule($rule, $priority);
         )+
@@ -547,36 +552,35 @@ mod tests {
 
     #[test]
     fn test_compile_string() {
-        let mut bnf = backus_naur_form!(
-            priority 0 => r#"<digit> ::= "1" | "2" | "3""#
+        let bnf = backus_naur_form!(
+            priority 0 => r#"<digit> ::= "1" | "2" | "3""# => |digit_token, _bnf| {
+                (digit_token
+                    .get_terminals()
+                    .parse::<usize>()
+                    .expect("failed to parse <digit> to usize")
+                    * 2)
+                .to_string()
+            }
             priority 0 => r#"<operator> ::= "+" | "-" | "*" | "/""#
-            priority 0 => r#"<expression> ::= <digit> <operator> <digit>"# => |token, _bnf| {
-                    let digits =
-                        token.get_child_tokens_of_type(&Symbol::NonTerminal("digit".to_string()));
-                    let _operator =
-                        token.get_child_tokens_of_type(&Symbol::NonTerminal("operator".to_string()));
-                    // let t = token
-                    let parsed_and_doubled = digits
-                        .into_iter()
-                        .map(|digit| {
-                            (digit
-                                .get_terminals()
-                                .parse::<usize>()
-                                .expect("failed to parse <digit> to usize")
-                                * 2)
-                            .to_string()
-                        })
-                        .collect::<Vec<_>>();
-
-                    parsed_and_doubled
-                        .first()
-                        .expect("failed to parse first digit")
-                        .to_owned()
-                        + "<here comes the operator>"
-                        + parsed_and_doubled
-                            .last()
-                            .expect("failed to parse last digit")
-                }
+            priority 0 => r#"<expression> ::= <digit> <operator> <digit>"# => |token, bnf| {
+                let digits = token.get_child_tokens_of_type(&Symbol::NonTerminal("digit".to_string()));
+                let _operator =
+                    token.get_child_tokens_of_type(&Symbol::NonTerminal("operator".to_string()));
+                let digits = digits
+                    .into_iter()
+                    .map(|digit| {
+                        bnf.compile_token(
+                            digit
+                                .to_non_terminal_ref()
+                                .expect("<digit> should be a non terminal token"),
+                        )
+                        .expect("no compile function available for <digit>")
+                    })
+                    .collect::<Vec<String>>();
+                digits.first().unwrap().to_string()
+                    + "<here comes the operator>"
+                    + digits.last().unwrap()
+            }
         );
 
         //test wether its symboliezd into exactly one symbol
@@ -591,35 +595,6 @@ mod tests {
                 ]
             )]
         );
-
-        bnf.add_compile_function("digit", &|digit_token, _bnf| {
-            (digit_token
-                .get_terminals()
-                .parse::<usize>()
-                .expect("failed to parse <digit> to usize")
-                * 2)
-            .to_string()
-        });
-
-        bnf.add_compile_function("expression", &|token, bnf| {
-            let digits = token.get_child_tokens_of_type(&Symbol::NonTerminal("digit".to_string()));
-            let _operator =
-                token.get_child_tokens_of_type(&Symbol::NonTerminal("operator".to_string()));
-            let digits = digits
-                .into_iter()
-                .map(|digit| {
-                    bnf.compile_token(
-                        digit
-                            .to_non_terminal_ref()
-                            .expect("<digit> should be a non terminal token"),
-                    )
-                    .expect("no compile function available for <digit>")
-                })
-                .collect::<Vec<String>>();
-            digits.first().unwrap().to_string()
-                + "<here comes the operator>"
-                + digits.last().unwrap()
-        });
 
         //check wether the operation gets turned into a expression
         assert!(bnf.compiles_to_root_token("2+3"));

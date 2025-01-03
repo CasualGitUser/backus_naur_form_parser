@@ -74,14 +74,6 @@ pub(super) fn non_terminal_symbol_from_rule(string: &str) -> NonTerminalSymbol {
     NonTerminalSymbol::new(symbol_name.to_string(), symbolized_expression)
 }
 
-pub fn get_name_from_rule(rule: &str) -> &str {
-    if let Some((name, _)) = rule.split_once("::=") {
-        name.trim()
-    } else {
-        panic!("the replacement operator (::=) is missing or invalid in the rule {rule}");
-    }
-}
-
 #[cfg(test)]
 mod tests {
 
