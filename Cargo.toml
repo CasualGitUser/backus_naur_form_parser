@@ -1,6 +1,6 @@
 [package]
 name = "backus_naur_form_parser_and_compiler"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 description = "A parser and compiler that uses Backus Naur Forms to create the AST with a option to compile the AST."
 license = "MIT"
