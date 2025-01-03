@@ -10,3 +10,5 @@ pub use backus_naur_form::token::non_terminal_token::NonTerminalToken;
 pub use backus_naur_form::token::TerminalToken;
 ///Enum that contains either a terminal token or a non terminal token.
 pub use backus_naur_form::token::Token;
+///Contains the actual backus naur form.
+pub use backus_naur_form::BackusNaurForm;

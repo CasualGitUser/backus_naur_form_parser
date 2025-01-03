@@ -280,7 +280,7 @@ impl<'a> BackusNaurForm<'a> {
 ///               | <expression> <operator> <number>
 ///               | <number> <operator> <expression>
 ///               | <expression> <operator> <expression>
-///               | <mul-or-div-expression> => |expression_token: &NonTerminalToken| {
+///               | <mul-or-div-expression> => |expression_token: &NonTerminalToken, _bnf: &BackusNaurForm<'_>| {
 ///                 "This is a expression".to_string()
 ///               }
 /// //this rule is applied before all others
