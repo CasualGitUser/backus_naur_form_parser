@@ -7,7 +7,7 @@ The BackusNaurForm struct represents a backus naur form. To create one, the macr
 A rule consists of up to 3 things:
 1. A priority. Rules with higher priority get applied first. (denoted by "priority number] =>")
 2. The rule. This is a raw string literal (r#"string comes here"#) so it can contain strings. The form is just like bnf: r#"<symbol> ::= "terminal string" "terminal string2" | "abc" <non_terminal | ..."#
-3. OPTIONAL: A function that compiles this token if its at the uppermost level in the AST. More info in the code documentation. This is a closure that takes a token and the backus naur form as arguments and returns a String. (denoted by a => |token, bnf| {})
+3. OPTIONAL: A function that compiles this token if its at the uppermost level in the AST. More info in the code documentation at backus_naur_form_parser_and_compiler::backus_naur_form::BackusNaurForm::compile_string. This is a closure that takes a token and the backus naur form as arguments and returns a String. (denoted by a => |token, bnf| {})
 
 The below code is a example that doubles the digits of a equation <digit><operator><digit> and replaces the <operator> with "<here comes the operator>"
 ```rust
