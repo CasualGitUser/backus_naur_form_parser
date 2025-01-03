@@ -1,0 +1,1 @@
+std::iter::Chain<std::vec::IntoIter<&backus_naur_form::token::non_terminal_token::TokenIndex>, std::vec::IntoIter<backus_naur_form::token::non_terminal_token::TokenIndex>>

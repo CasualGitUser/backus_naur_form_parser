@@ -1,0 +1,1 @@
+std::iter::Chain<std::iter::Map<std::slice::Iter<'_, &backus_naur_form::token::Token>, {closure@src\backus_naur_form\token.rs:108:18: 108:22}>, std::slice::Iter<'_, &backus_naur_form::token::Token>>

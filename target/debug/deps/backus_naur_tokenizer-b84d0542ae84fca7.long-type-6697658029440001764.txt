@@ -1,0 +1,1 @@
+std::iter::Chain<std::iter::Copied<std::slice::Iter<'_, &backus_naur_form::token::Token>>, std::slice::Iter<'_, &backus_naur_form::token::Token>>

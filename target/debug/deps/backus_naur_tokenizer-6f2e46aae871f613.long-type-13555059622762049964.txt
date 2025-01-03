@@ -1,0 +1,1 @@
+std::iter::Copied<std::iter::Filter<std::slice::Iter<'_, backus_naur_form::token::Token>, {closure@src\backus_naur_form\token.rs:150:21: 150:30}>>

@@ -1,0 +1,1 @@
+(&std::string::String, std::iter::Filter<std::slice::Iter<'_, std::vec::Vec<backus_naur_form::symbol::Symbol>>, {closure@src\backus_naur_form.rs:47:33: 47:41}>)

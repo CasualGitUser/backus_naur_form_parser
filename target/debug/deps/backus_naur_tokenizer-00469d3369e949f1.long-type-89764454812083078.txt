@@ -1,0 +1,1 @@
+core::iter::adapters::map::Map<core::slice::iter::Iter<'_, alloc::vec::Vec<backus_naur_form::Symbol>>, {closure@src\backus_naur_form.rs:33:55: 33:63}>

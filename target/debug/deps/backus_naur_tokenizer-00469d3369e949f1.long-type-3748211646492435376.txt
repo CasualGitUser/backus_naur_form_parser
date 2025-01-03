@@ -1,0 +1,1 @@
+std::iter::FlatMap<std::slice::Iter<'_, std::vec::Vec<backus_naur_form::symbol::Symbol>>, std::vec::Vec<&[backus_naur_form::token::Token]>, {closure@src\backus_naur_form.rs:47:35: 47:43}>
