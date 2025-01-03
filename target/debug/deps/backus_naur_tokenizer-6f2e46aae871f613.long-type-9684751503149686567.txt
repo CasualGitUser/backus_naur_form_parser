@@ -1,1 +1,0 @@
-std::iter::Chain<std::slice::Iter<'_, &backus_naur_form::token::non_terminal_token::TokenIndex>, std::vec::IntoIter<&backus_naur_form::token::non_terminal_token::TokenIndex>>

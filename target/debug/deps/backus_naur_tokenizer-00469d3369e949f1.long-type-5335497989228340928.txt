@@ -1,1 +1,0 @@
-std::iter::Chain<std::iter::FlatMap<std::slice::Iter<'_, &backus_naur_form::token::Token>, std::slice::Iter<'_, backus_naur_form::token::Token>, {closure@src\backus_naur_form\token.rs:116:23: 116:31}>, std::iter::Copied<std::iter::Filter<std::slice::Iter<'_, &backus_naur_form::token::Token>, {closure@src\backus_naur_form\token.rs:131:21: 131:30}>>>

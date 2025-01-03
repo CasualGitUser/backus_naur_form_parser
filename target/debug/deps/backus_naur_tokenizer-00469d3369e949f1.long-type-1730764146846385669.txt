@@ -1,1 +1,0 @@
-std::iter::Map<std::iter::Filter<std::slice::Windows<'_, backus_naur_form::token::Token>, {closure@src\backus_naur_form\symbol.rs:43:21: 43:29}>, {closure@src\backus_naur_form\symbol.rs:44:21: 44:29}>
